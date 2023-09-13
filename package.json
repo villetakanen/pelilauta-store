@@ -1,0 +1,26 @@
+{
+  "name": "pelilauta_store",
+  "version": "1.0.0-alpha.0",
+  "description": "The second gen storage docs, and store helpers",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/pelilauta_store.umd.js",
+  "module": "./dist/pelilauta_store.es.js",
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest",
+    "lint": "eslint . --ext .ts"
+  },
+  "keywords": [],
+  "author": "Ville Takanen",
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
+    "eslint": "^8.49.0",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.9",
+    "vitest": "^0.34.4"
+  }
+}
