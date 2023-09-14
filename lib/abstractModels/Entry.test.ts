@@ -43,3 +43,33 @@ test('Supports creation of an Entry from a DocumentData object with a key', () =
   expect(e.updatedAt).toBe(2)
   expect(e.flowtime).toBe(3)
 })
+
+test('Supports creation of an Entry from a DocumentData object with a string owner', () => {
+  const e = Entry.fromFirestore({
+    key: 'key',
+    createdAt: 1,
+    updatedAt: 2,
+    flowtime: 3,
+    owners: 'owner'
+  })
+  expect(e.key).toBe('key')
+  expect(e.createdAt).toBe(1)
+  expect(e.updatedAt).toBe(2)
+  expect(e.flowtime).toBe(3)
+  expect(e.owners).toEqual(['owner'])
+})
+
+test('Supports creation of an Entry from a DocumentData object with an array of owners', () => {
+  const e = Entry.fromFirestore({
+    key: 'key',
+    createdAt: 1,
+    updatedAt: 2,
+    flowtime: 3,
+    owners: ['owner1', 'owner2']
+  })
+  expect(e.key).toBe('key')
+  expect(e.createdAt).toBe(1)
+  expect(e.updatedAt).toBe(2)
+  expect(e.flowtime).toBe(3)
+  expect(e.owners).toEqual(['owner1', 'owner2'])
+})

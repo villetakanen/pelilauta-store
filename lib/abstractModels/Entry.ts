@@ -1,31 +1,22 @@
-import { DocumentData } from "./DocumentData"
+import type { DocumentData } from "../main";
+import { Storable, StorableType } from "./Storable"
 
 export type EntryType = {
-  key: string
   createdAt?: number|undefined
   updatedAt?: number|undefined
   flowtime?: number
-  colletionName: string
-  firestorePath: string[]
-  toJSON: () => DocumentData
-}
+  owners: string[]
+} & StorableType
 
-export class Entry implements EntryType {
-  key = ''
+export class Entry extends Storable implements EntryType {
+  
   createdAt:number|undefined = undefined
   updatedAt:number|undefined = undefined
   flowtime = -1
+  owners: string[] = []
 
   constructor(key?: string) {
-    if (key) this.key = key
-  }
-
-  get colletionName(): string {
-    throw new Error('Not implemented')
-  }
-
-  get firestorePath(): string[] {
-    throw new Error('Not implemented')
+    super(key)
   }
 
   /**
@@ -49,6 +40,13 @@ export class Entry implements EntryType {
     // set flowtime to -1 if it is not a number
     e.flowtime = data.flowtime && typeof data.flowtime === 'number' ? data.flowtime : -1
 
+    // set owners to [owner] if it is a string
+    if (data.owners && typeof data.owners === 'string') e.owners = [data.owners]
+    // else, if it's an array, set owners to it
+    else if (data.owners && Array.isArray(data.owners)) e.owners = data.owners as string[]
+    // else, set owners to []
+    else e.owners = []
+
     return e
   }
 
@@ -56,12 +54,17 @@ export class Entry implements EntryType {
    * Returns the class in a firestore friendly JSON format
    */
   public toJSON(): DocumentData {
-    const data = {
-      key: this.key,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
-      flowtime: this.flowtime
-    }
+    const data = super.toJSON()
+
+    // if createdAt is set, add it to the data
+    if (this.createdAt) data.createdAt = this.createdAt
+
+    // if updatedAt is set, add it to the data
+    if (this.updatedAt) data.updatedAt = this.updatedAt
+
+    // if flowtime is set, add it to the data
+    if (this.flowtime) data.flowtime = this.flowtime
+
     return data
   }
 }

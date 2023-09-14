@@ -1,5 +1,6 @@
-const path = require('path')
-const { defineConfig } = require('vite')
+import path from 'path'
+import { defineConfig } from 'vite'
+import dts from 'vite-plugin-dts'
 
 module.exports = defineConfig({
   build: {
@@ -8,5 +9,6 @@ module.exports = defineConfig({
       name: 'pelilauta_store',
       fileName: (format) => `pelilauta_store.${format}.js`
     }
-  }
+  },
+  plugins: [dts()]
 });

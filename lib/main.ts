@@ -1,4 +1,5 @@
-export function helloWorld() {
-  return 'Hello world!';
+export type DocumentData = {
+  [key: string]: string | string[] | number | boolean | Date | undefined | DocumentData | DocumentData[]
 }
-export * from './abstractModels/entry';
+
+export * from './contentEntries/BlogPost'
