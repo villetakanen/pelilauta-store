@@ -14,6 +14,14 @@ export class BlogPost extends ContentEntry implements BlogPostType {
     super(key)
   }
 
+  public get colletionName() {
+    return 'blogPosts'
+  }
+
+  public get firestorePath() {
+    return [this.colletionName, this.key]
+  }
+
   public toJSON() {
     const data = super.toJSON()
     if (this.releaseDate) data.releaseDate = this.releaseDate
