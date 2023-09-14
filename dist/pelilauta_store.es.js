@@ -18,7 +18,7 @@ class l {
     };
   }
 }
-class r extends l {
+class s extends l {
   constructor(t) {
     super(t), this.createdAt = void 0, this.updatedAt = void 0, this.flowtime = -1, this.owners = [];
   }
@@ -28,8 +28,8 @@ class r extends l {
    * @param {DocumentData} data The DocumentData object to create the Entry from
    * @param {string} key The key of the Entry
    */
-  static fromFirestore(t, s) {
-    const e = new r(s);
+  static fromFirestore(t, r) {
+    const e = new s(r);
     return !e.key && t.key && (e.key = t.key), e.createdAt = t.createdAt && typeof t.createdAt == "number" ? t.createdAt : void 0, e.updatedAt = t.updatedAt && typeof t.updatedAt == "number" ? t.updatedAt : void 0, e.flowtime = t.flowtime && typeof t.flowtime == "number" ? t.flowtime : -1, t.owners && typeof t.owners == "string" ? e.owners = [t.owners] : t.owners && Array.isArray(t.owners) ? e.owners = t.owners : e.owners = [], e;
   }
   /**
@@ -40,7 +40,7 @@ class r extends l {
     return this.createdAt && (t.createdAt = this.createdAt), this.updatedAt && (t.updatedAt = this.updatedAt), this.flowtime && (t.flowtime = this.flowtime), t;
   }
 }
-class i extends r {
+class i extends s {
   constructor(t) {
     super(t), this.tags = [], this.title = "", this.markdownContent = "", this.htmlContent = "", this.public = !0;
   }
@@ -57,14 +57,20 @@ class i extends r {
    * @param {DocumentData} data The DocumentData object to create the Entry from
    * @param {string} key The key of the Entry
    */
-  static fromFirestore(t, s) {
-    const e = i.migrateFromV1(t), o = r.fromFirestore(e, s);
+  static fromFirestore(t, r) {
+    const e = i.migrateFromV1(t), o = s.fromFirestore(e, r);
     return !e.tags || !Array.isArray(e.tags) ? o.tags = [] : o.tags = e.tags, !e.title || typeof e.title != "string" ? o.title = "" : o.title = e.title, !e.markdownContent || typeof e.markdownContent != "string" ? o.markdownContent = "" : o.markdownContent = e.markdownContent, !e.htmlContent || typeof e.htmlContent != "string" ? o.htmlContent = "" : o.htmlContent = e.htmlContent, typeof e.public != "boolean" ? o.public = !0 : o.public = e.public, o;
   }
 }
 class h extends i {
   constructor(t) {
     super(t), this.releaseDate = void 0, this.blogKey = "";
+  }
+  get colletionName() {
+    return "blogPosts";
+  }
+  get firestorePath() {
+    return [this.colletionName, this.key];
   }
   toJSON() {
     const t = super.toJSON();
@@ -76,8 +82,8 @@ class h extends i {
    * @param {DocumentData} data The DocumentData object to create the Entry from
    * @param {string} key The key of the Entry
    */
-  static fromFirestore(t, s) {
-    const e = i.fromFirestore(t, s);
+  static fromFirestore(t, r) {
+    const e = i.fromFirestore(t, r);
     return t.releaseDate && (e.releaseDate = t.releaseDate), t.origin && (e.blogKey = t.blogKey), e;
   }
 }

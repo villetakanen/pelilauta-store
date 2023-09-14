@@ -8,6 +8,8 @@ export declare class BlogPost extends ContentEntry implements BlogPostType {
     releaseDate: number | undefined;
     blogKey: string;
     constructor(key?: string);
+    get colletionName(): string;
+    get firestorePath(): string[];
     toJSON(): DocumentData;
     /**
      * A Factory method to create an Entry from a DocumentData object
