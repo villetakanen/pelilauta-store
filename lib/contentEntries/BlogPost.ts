@@ -1,4 +1,4 @@
-import { ContentEntry, ContentEntryType } from "../abstractModels/ContentEntry";
+import { ContentEntry, type ContentEntryType } from "../abstractModels/ContentEntry";
 import type { DocumentData } from "../main";
 
 export type BlogPostType = {
@@ -15,7 +15,7 @@ export class BlogPost extends ContentEntry implements BlogPostType {
   }
 
   public get colletionName() {
-    return 'blogPosts'
+    return 'articles'
   }
 
   public get firestorePath() {
